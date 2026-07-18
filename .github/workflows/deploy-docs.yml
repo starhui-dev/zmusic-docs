@@ -1,0 +1,65 @@
+name: Deploy docs
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - '.npmrc'
+      - '.node-version'
+      - 'mise.toml'
+      - '.github/workflows/deploy-docs.yml'
+      - 'scripts/deploy-docs.sh'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: docs-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      DEPLOY_HISTORY_LIMIT: '5'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build documentation
+        run: pnpm build
+
+      - name: Install deployment tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends openssh-client rsync
+
+      - name: Deploy documentation
+        run: bash scripts/deploy-docs.sh
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ vars.DEPLOY_USER }}
+          DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
+          DEPLOY_TARGET: ${{ vars.DEPLOY_TARGET }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}

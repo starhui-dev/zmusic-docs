@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+readonly DEPLOY_HOST_ALIAS='deploy-server'
+
 log() {
   printf '[deploy-docs] %s\n' "$*"
 }
@@ -14,11 +16,31 @@ require_env() {
 }
 
 prepare_ssh() {
+  local port="$DEPLOY_PORT"
+
+  if [[ ! "$port" =~ ^[0-9]+$ ]] || (( port < 1 || port > 65535 )); then
+    echo "invalid DEPLOY_PORT: $port" >&2
+    exit 1
+  fi
+
+  umask 077
   mkdir -p ~/.ssh
-  printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+  printf '%s\n' "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_ed25519
   chmod 600 ~/.ssh/id_ed25519
-  printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
-  printf '%s\n' "$SSH_CONFIG" > ~/.ssh/config
+
+  {
+    printf 'LogLevel ERROR\n'
+    printf 'Host %s\n' "$DEPLOY_HOST_ALIAS"
+    printf '  HostName %s\n' "$DEPLOY_HOST"
+    printf '  User %s\n' "$DEPLOY_USER"
+    printf '  Port %s\n' "$port"
+    printf '  IdentityFile ~/.ssh/id_ed25519\n'
+    printf '  IdentitiesOnly yes\n'
+    printf '  StrictHostKeyChecking no\n'
+    printf '  UserKnownHostsFile /dev/null\n'
+    printf '  BatchMode yes\n'
+    printf '  ConnectTimeout 15\n'
+  } > ~/.ssh/config
   chmod 600 ~/.ssh/config
 }
 
@@ -113,11 +135,11 @@ show_change_preview() {
 }
 
 main() {
-  require_env DEPLOY_HOST_ALIAS
+  require_env DEPLOY_HOST
+  require_env DEPLOY_PORT
+  require_env DEPLOY_USER
   require_env DEPLOY_TARGET
   require_env SSH_PRIVATE_KEY
-  require_env SSH_KNOWN_HOSTS
-  require_env SSH_CONFIG
 
   local dist_dir deploy_root releases_dir release_name release_stage release_path
   local current_tmp legacy_release history_limit

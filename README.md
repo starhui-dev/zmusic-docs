@@ -16,7 +16,9 @@ pnpm dev
 pnpm build
 ```
 
-产物输出到 `docs/.vitepress/dist/`。推送 `main` 分支且文档相关文件变更时，由 CNB 流水线自动构建并部署。
+产物输出到 `docs/.vitepress/dist/`。推送 `main` 分支且文档相关文件变更时，由 GitHub Actions 自动构建并部署。
+
+部署工作流位于 `.github/workflows/deploy-docs.yml`。需在仓库 Actions Variables 中配置 `DEPLOY_USER` 和 `DEPLOY_TARGET`，Actions Secrets 中配置 `DEPLOY_HOST`、`DEPLOY_PORT` 和 `SSH_PRIVATE_KEY`。
 
 ## 历史说明
 

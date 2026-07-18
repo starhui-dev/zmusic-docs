@@ -4,7 +4,7 @@
   "description": "ZMusic Documentation",
   "type": "module",
   "scripts": {
-    "dev": "vitepress dev docs",
+    "dev": "vitepress dev docs --host",
     "build": "vitepress build docs",
     "postbuild": "node docs/postbuild.ts",
     "preview": "vitepress preview docs"

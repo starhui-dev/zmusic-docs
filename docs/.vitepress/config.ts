@@ -27,6 +27,9 @@ export default defineConfig({
   },
   head: [
     ['meta', { name: 'viewport', content: 'width=device-width,initial-scale=1,user-scalable=no' }],
+    // 预加载群二维码，避免首次打开弹窗时图片仍在加载导致空白闪烁
+    ['link', { rel: 'preload', as: 'image', href: '/images/qq-group.png' }],
+    ['link', { rel: 'preload', as: 'image', href: '/images/wechat-group.png' }],
     ['script', { src: 'https://cdn.zhenxin.me/static/js/autoGray.js' }],
     [
       'script',

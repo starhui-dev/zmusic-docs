@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { Download, UserPlus, X } from '@lucide/vue'
-import { useData } from 'vitepress'
 import { siQq, siWechat } from 'simple-icons'
 
 type GroupType = 'qq' | 'wechat'
@@ -15,7 +14,6 @@ const GROUP_TABS: { type: GroupType; label: string; icon: typeof siQq }[] = [
 
 const dialog = ref<HTMLDialogElement>()
 const groupType = ref<GroupType>('wechat')
-const { isDark } = useData()
 
 const isQqGroup = computed(() => groupType.value === 'qq')
 const qrCodeSrc = computed(() =>
@@ -125,7 +123,6 @@ onBeforeUnmount(() => document.removeEventListener('click', openDialog))
     <dialog
       ref="dialog"
       class="group-dialog"
-      :class="{ dark: isDark }"
       :style="{ '--group-brand': brandColor }"
       :aria-label="dialogLabel"
       @click="closeFromBackdrop"
@@ -225,7 +222,8 @@ onBeforeUnmount(() => document.removeEventListener('click', openDialog))
   -webkit-backdrop-filter: blur(8px);
 }
 
-.group-dialog.dark {
+/* 深色模式跟随全局 html.dark，不绑定 isDark——水合时属性不匹配不会被补丁，绑定会卡在 SSR 状态 */
+.dark .group-dialog {
   border-color: rgba(148, 163, 184, 0.22);
   background: rgba(17, 24, 39, 0.82);
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);

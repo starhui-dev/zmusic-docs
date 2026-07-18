@@ -53,7 +53,7 @@ export function getSiteIconName(link?: string, text?: string): SiteIconName | nu
   if (text && localeLabels.has(text)) return null
 
   if (/discord\.gg/.test(link)) return 'messages-square'
-  if (/jq\.qq\.com/.test(link)) return 'message-circle'
+  if (/(?:jq|qm)\.qq\.com/.test(link) || link === '#wechat-group') return 'message-circle'
 
   if (homeLabels.has(text ?? '')) return 'home'
 

@@ -58,6 +58,7 @@ function nav(): DefaultTheme.NavItem[] {
     },
     { text: '常见问题', link: '/faq' },
     { text: 'QQ群', link: 'https://qm.qq.com/q/buxuatfTCo' },
+    { text: '微信群', link: '#wechat-group' },
     {
       text: '4.0.0-dev',
       items: [

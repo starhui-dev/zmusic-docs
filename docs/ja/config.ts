@@ -58,6 +58,7 @@ function nav(): DefaultTheme.NavItem[] {
     },
     { text: 'よくある質問', link: '/ja/faq' },
     { text: 'Discord', link: 'https://discord.gg/twQgJNufYn' },
+    { text: 'Discord ルール', link: '/ja/group' },
     {
       text: '4.0.0-dev',
       items: [
@@ -90,6 +91,7 @@ function sidebar(): DefaultTheme.Sidebar {
       ]
     },
     { text: 'よくある質問', link: '/ja/faq' },
+    { text: 'Discord ルール', link: '/ja/group' },
     { text: 'V2 ドキュメント', link: '/ja/v2/' }
   ]
 }

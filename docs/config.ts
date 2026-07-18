@@ -59,6 +59,7 @@ function nav(): DefaultTheme.NavItem[] {
     { text: '常见问题', link: '/faq' },
     { text: 'QQ群', link: '#qq-group' },
     { text: '微信群', link: '#wechat-group' },
+    { text: '群公告', link: '/group' },
     {
       text: '4.0.0-dev',
       items: [
@@ -91,6 +92,7 @@ function sidebar(): DefaultTheme.Sidebar {
       ]
     },
     { text: '常见问题', link: '/faq' },
+    { text: '群公告', link: '/group' },
     { text: 'V2 文档', link: '/v2/' }
   ]
 }

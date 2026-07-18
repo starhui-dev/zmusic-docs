@@ -17,7 +17,8 @@ import {
   Signpost,
   Terminal,
   Shield,
-  Settings
+  Settings,
+  Megaphone
 } from '@lucide/vue'
 import { siDiscord, siQq, siWechat } from 'simple-icons'
 
@@ -35,7 +36,8 @@ const iconMap: Record<string, typeof Home> = {
   signpost: Signpost,
   terminal: Terminal,
   shield: Shield,
-  settings: Settings
+  settings: Settings,
+  megaphone: Megaphone
 }
 
 // 品牌图标为纯色 SVG 路径，fill=currentColor，随文字颜色自动适配深色模式

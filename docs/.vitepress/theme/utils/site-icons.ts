@@ -12,6 +12,7 @@ export type SiteIconName =
   | 'terminal'
   | 'shield'
   | 'settings'
+  | 'megaphone'
 
 const localeLabels = new Set(['简体中文', 'English', '日本語'])
 
@@ -26,6 +27,7 @@ const docIconMap: Record<string, SiteIconName> = {
   '/guide/permissions': 'shield',
   '/guide/config': 'settings',
   '/faq': 'circle-help',
+  '/group': 'megaphone',
   '/v2': 'book-open',
   '/v2/faq': 'circle-help',
   '/netease-api': 'music',

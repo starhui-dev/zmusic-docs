@@ -58,6 +58,7 @@ function nav(): DefaultTheme.NavItem[] {
     },
     { text: 'FAQ', link: '/en/faq' },
     { text: 'Discord', link: 'https://discord.gg/twQgJNufYn' },
+    { text: 'Discord Rules', link: '/en/group' },
     {
       text: '4.0.0-dev',
       items: [
@@ -90,6 +91,7 @@ function sidebar(): DefaultTheme.Sidebar {
       ]
     },
     { text: 'FAQ', link: '/en/faq' },
+    { text: 'Discord Rules', link: '/en/group' },
     { text: 'V2 Docs', link: '/en/v2/' }
   ]
 }

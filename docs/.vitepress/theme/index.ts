@@ -9,7 +9,7 @@ import HomeHeroScene from './components/HomeHeroScene.vue'
 import ModDownload from './components/ModDownload.vue'
 import ModExternalLinks from './components/ModExternalLinks.vue'
 import NeteaseApiTable from './components/NeteaseApiTable.vue'
-import WechatGroupDialog from './components/WechatGroupDialog.vue'
+import GroupDialog from './components/GroupDialog.vue'
 import './style.css'
 
 export default {
@@ -19,7 +19,7 @@ export default {
       'doc-before': () => h(DocPageHeading),
       'doc-after': () => h(GiscusComments),
       'home-hero-image': () => h(HomeHeroScene),
-      'layout-bottom': () => h(WechatGroupDialog)
+      'layout-bottom': () => h(GroupDialog)
     }),
   enhanceApp({ app }) {
     app.component('DownloadTable', DownloadTable)

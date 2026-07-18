@@ -4,8 +4,9 @@ export type SiteIconName =
   | 'circle-help'
   | 'circle-info'
   | 'music'
-  | 'message-circle'
-  | 'messages-square'
+  | 'qq'
+  | 'wechat'
+  | 'discord'
   | 'book-open'
   | 'signpost'
   | 'terminal'
@@ -52,8 +53,9 @@ export function getSiteIconName(link?: string, text?: string): SiteIconName | nu
   if (!link) return null
   if (text && localeLabels.has(text)) return null
 
-  if (/discord\.gg/.test(link)) return 'messages-square'
-  if (/(?:jq|qm)\.qq\.com/.test(link) || link === '#wechat-group') return 'message-circle'
+  if (/discord\.gg/.test(link)) return 'discord'
+  if (/(?:jq|qm)\.qq\.com/.test(link) || link === '#qq-group') return 'qq'
+  if (link === '#wechat-group') return 'wechat'
 
   if (homeLabels.has(text ?? '')) return 'home'
 

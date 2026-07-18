@@ -1,5 +1,8 @@
 <template>
-  <component :is="icon" class="site-icon" aria-hidden="true" />
+  <svg v-if="brandPath" class="site-icon brand-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <path :d="brandPath" fill="currentColor" />
+  </svg>
+  <component v-else :is="icon" class="site-icon" aria-hidden="true" />
 </template>
 
 <script lang="ts" setup>
@@ -10,14 +13,13 @@ import {
   CircleHelp,
   Info,
   Music,
-  MessageCircle,
-  MessagesSquare,
   BookOpen,
   Signpost,
   Terminal,
   Shield,
   Settings
 } from '@lucide/vue'
+import { siDiscord, siQq, siWechat } from 'simple-icons'
 
 const props = defineProps<{
   name: string
@@ -29,8 +31,6 @@ const iconMap: Record<string, typeof Home> = {
   'circle-help': CircleHelp,
   'circle-info': Info,
   music: Music,
-  'message-circle': MessageCircle,
-  'messages-square': MessagesSquare,
   'book-open': BookOpen,
   signpost: Signpost,
   terminal: Terminal,
@@ -38,6 +38,14 @@ const iconMap: Record<string, typeof Home> = {
   settings: Settings
 }
 
+// 品牌图标为纯色 SVG 路径，fill=currentColor，随文字颜色自动适配深色模式
+const brandIconMap: Record<string, string> = {
+  qq: siQq.path,
+  wechat: siWechat.path,
+  discord: siDiscord.path
+}
+
+const brandPath = computed(() => brandIconMap[props.name])
 const icon = computed(() => iconMap[props.name] || Home)
 </script>
 
